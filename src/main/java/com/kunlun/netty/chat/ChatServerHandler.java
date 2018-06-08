@@ -29,7 +29,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<String> {
         channelGroup.forEach(ch -> {
             //如果channel不等于ch  则正常收到消息通知
             if (channel != ch) {
-                ch.writeAndFlush(channel.remoteAddress() + "发送的消息:" + msg);
+                ch.writeAndFlush(channel.remoteAddress() + "发送的消息:" + msg + "\n");
             } else {
                 ch.writeAndFlush("[自己] -" + msg + "\n");
             }
