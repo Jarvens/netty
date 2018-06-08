@@ -14,15 +14,18 @@ import io.netty.util.CharsetUtil;
  *
  * @author wangbinbin
  * @version 1.0.0
- * @date 2018/6/8 下午10:02
+ * @date 2018/6/8 下午10:34
  */
-public class ChatServerInitializer extends ChannelInitializer<SocketChannel> {
+public class ChatClientInitializer extends ChannelInitializer<SocketChannel> {
+
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
+
         ChannelPipeline pipeline = ch.pipeline();
         pipeline.addLast(new DelimiterBasedFrameDecoder(4096, Delimiters.lineDelimiter()));
         pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-        pipeline.addLast(new ChatServerHandler());
+        pipeline.addLast(new ChatClientHandler());
     }
+
 }
