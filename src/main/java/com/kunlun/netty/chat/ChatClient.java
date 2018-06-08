@@ -26,7 +26,7 @@ public class ChatClient {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(new ChatClientInitializer());
 
-            Channel channel = bootstrap.bind(8899).sync().channel();
+            Channel channel = bootstrap.connect("localhost", 8899).sync().channel();
             //channelFuture.channel().closeFuture().sync();
             //注释上一行代码是由于需要不断读取输入
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
