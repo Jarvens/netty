@@ -5,6 +5,8 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.ServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 
 /**
  * TODO:
@@ -20,7 +22,10 @@ public class HeartBeatServer {
         EventLoopGroup workGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
-            serverBootstrap.group(boosGroup, workGroup).channel(ServerSocketChannel.class).handler(null);
+            //handler 和ChildHandler的区别
+            //handler是针对于boosGroup  而ChildHandler是针对于 workGroup
+            serverBootstrap.group(boosGroup, workGroup).channel(ServerSocketChannel.class)
+                .handler(new LoggingHandler(LogLevel.INFO)).childHandler(null);
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
             channelFuture.channel().closeFuture().sync();
         } finally {
